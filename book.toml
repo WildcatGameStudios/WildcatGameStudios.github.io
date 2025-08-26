@@ -1,0 +1,5 @@
+[book]
+authors = ["Ben Carey"]
+language = "en"
+src = "src"
+title = "Wildcat Game Studios Computer Science Modules"
