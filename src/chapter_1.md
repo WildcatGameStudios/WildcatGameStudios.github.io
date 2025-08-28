@@ -102,7 +102,17 @@ code .
 ```
 
 (Note again the `.`.) Make sure to keep your terminal open as you make your
-changes. Once finished, go back to your terminal and run:
+changes.
+
+#### Side note:
+In order for git to pick up any changes, there must be files that were either
+created, modified, deleted, or moved within the git repository. Creating a new
+folder (aka "directory") is not enough for git to pick it up. This is due to
+both design changes within git and because of historical Unix filesystem magic.
+Don't worry too much about it, just make sure to create a file for the sake of
+this tutorial.
+
+Once finished, go back to your terminal and run:
 ```bash
 git status
 ```
