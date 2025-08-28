@@ -1,13 +1,3 @@
-TODO: there are some linker dependencies needing to be resolved:
-1.1:
-- installing on windows: how to get into path?
-- installing on macos: how to install in general? prebuilt?
-1.2:
-- test if configuration is enough to actually commit and push
-1.3:
-1.4:
-- finish github stuff; i'd like to run it all in windows if possible
-
 # Chapter 1: Using Git
 
 Git is a program that manages the versions of a project. It tracks changes
@@ -32,15 +22,13 @@ Let's get started.
 
 Installing Git is different between the different operating systems.
 
-### For Windows:
+### For Windows and MacOS:
 
 Go to [the git website](www.git-scm.com) and download the Git installer. This
 will open an installation wizard. Default values for all fields is acceptable.
-##### TODO: install to path??
-
-### For MacOS:
-
-##### TODO: Garrett can help here!
+Note that for Windows users, you may need to add git to your PATH environment
+variable. If you need help with that or don't know what it means, please reach
+out to your Wildcat Game Studios CS team lead.
 
 ### For Linux:
 
@@ -184,6 +172,12 @@ account.
 We will be using the Github command-line utility to create a repository online.
 To install it, go to the [Github CLI repository](https://github.com/github/cli).
 
+You will also need to create a "Personal Access Token." This is like two-factor
+authentication, but you choose each permission someone has to your account when
+using the token. Follow [this
+tutorial](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+to set one up.
+
 To create the repository, run:
 ```
 gh repo create
@@ -196,6 +190,10 @@ repository to GitHub`:
   Create a new repository on GitHub from a template repository
 > Push an existing local repository to GitHub
 ```
+
+Continue with default options for the rest of the installation process. Note
+that, if it asks for you to input a password for your account, use your
+personal access token generated above instead of your account password.
 
 ## 1.4: How Git Works
 
@@ -245,8 +243,22 @@ To see this diff in your own project, run the following command
 git diff HEAD~1
 ```
 `HEAD` is the name of the latest commit in your local committed area, and `~1`
-means "get the diff since the last commit".
+means "get the diff since the last commit". You could also use `HEAD~3` to git
+the difference since the third-to-last commit, etc.
 
 ### The Remote Repository
 This is the host of your project that is shared with other developers. When you
 created the remote target on GitHub, you created the remote repository.
+
+## 1.5: Final Remarks
+
+Once you have finished creating your first repository, follow these steps to
+show you understand the content in this module:
+- Create a new file in your repository and add a few of your favorite things
+  into it.
+- Check that file into the staging area (hint: either use `git add .` or `git
+  add <your file>`).
+- Commit what you've checked in and push it to your new repository using `git
+  push`.
+- Copy the URL of the repository you created and send it to the current Wildcat
+  Game Studios CS lead.
