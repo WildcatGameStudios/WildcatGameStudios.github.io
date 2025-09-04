@@ -211,7 +211,7 @@ editor and use WSAD to move. You now have a primitive but playable character!
 
 ![Godot primitive Link.](./godot-primitive-link.gif)
 
-## 2.4: Next Steps:
+## 2.5: Next Steps:
 
 The next tutorial will have you creating a 2D platformer. To complete this
 module, create a new node that's controlled by the arrow keys on your keyboard.
