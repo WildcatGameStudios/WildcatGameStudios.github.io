@@ -1,10 +1,13 @@
 # Chapter 2: Godot Beginnings
-
 Us programmers have the important role of creating Game Objects, or "toys", for
 the game designers to play with. In this tutorial we will make a simple toy and
 demonstrate how to play with it in the Godot editor.
 
-###### TODO: include video of simple godot node creation.
+If you'd rather follow along a video, watch
+[this](https://youtu.be/LOhfqjmasi0?si=9OEUZUkWWFVwaBG2) as an alternative to
+reading the following document. The content contained within will be used for
+the next module as well. You can then skip to Part 2.4 for the assignment to
+turn in.
 
 If you haven't already installed Godot, you can do that
 [here](https://godotengine.org/download/windows/).
@@ -66,8 +69,6 @@ advanced scenes and signals.
 The first scene we'll create will be modeled after Link from the original The
 Legend of Zelda.
 
-###### TODO: insert image or gif of Link here
-
 Click on "2D Scene" in the left menu bar. You're then greeted by this:
 
 ![Godot empty 2D editor.](./godot-2d-editor.png "Godot 2D Editor")
@@ -90,8 +91,6 @@ Get used to this popup as you'll see it frequently. In the search bar look up
 just appeared and press `F2` or right-click on "Rename" and give it the name
 "player".
 
-###### TODO: talk about style guides for WGS. Why do we rename?
-
 Now click on the "player" node in the scene tree and press `Ctrl+A` or
 right-click on "Add Child Node..." again. This time, create a
 `CollisionShape2D` and rename it to "player\_collider".
@@ -100,7 +99,7 @@ In the right menu bar of the editor lives a few submenus. The one currently
 visible, named "Inspector", holds a bunch of data about the currently selected
 node. As we're currently on "player\_collider", we'll see this:
 
-![Godot inspector for collision shape.](./godot-inspector.md "Godot Inspector")
+![Godot inspector for collision shape.](./godot-inspector.png "Godot Inspector")
 
 These parameters control many aspects of the node itself from its transform,
 texture, render properties, etc. Here, click on the box that says "\<empty\>"
@@ -110,17 +109,15 @@ to your heart's desire. If you'd like finer control, click on the rectangle in
 the inspector that now says "RectangleShape2D". A submenu should appear with
 some parameters.
 
-###### TODO: roadmap: add Animated Sprite, create script, add movement, demo.
-
 Now click the "player" node in the scene tree and add a child node. Search for
 "Sprite2D" in the node create menu and select it. Rename it to
 "player\_sprite". Then navigate to the inspector and click on the box that says
 "\<empty\>" as before. This time, click on the "New GradientTexture2D" option.
 You now see seomthing like this:
 
-![Godot after creating Sprite2D.](./godot-after-sprite.md "A Visible Sprite2D")
+![Godot after creating Sprite2D.](./godot-after-sprite.png "A Visible Sprite2D")
 
-This is a temporary sprite we'll use for debugging. Later, we'll replace this
+This is a temporary texture we'll use for debugging. Later, we'll replace this
 with an animated sprite that has changing textures in response to user input.
 At this point we can save our progress using `Ctrl+S` or by navigating to
 "Scene-\>Save Scene" in the top menu bar. Let's call it "link.tscn". You now
@@ -151,10 +148,85 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 ```
 
-We'll do a line-by-line of this code later in this tutorial. For now, we should
-be ready to run the project.
+Let's break down what's going on here.
+
+## 2.4: Anatomy of a Godot Script
+
+```
+extends CharacterBody2D
+```
+At the top of the file is an `extends` keyword. This declares to the script
+what kind of node it should operate on. Extending a `CharacterBody2D` gives the
+script writer access to properties only used by a `CharacterBody2D`, such as
+velocity. Note that `CharacterBody2D` is called a "class". `Node`, `Node2D`,
+`CollisionShape2D`, etc. are all class names.
+
+```
+const WALKING_SPEED: float = 120.0
+```
+We then define a constant value with `const`. This value won't change
+throughout the duration of the game's lifetime. Its type is a `float` with the
+compile-time value of `120.0`.
+
+```
+func _ready() -> void:
+    pass
+```
+Every `CharacterBody2D` (and every node used by the editor) extends the `Node`
+class. Therefore, our script also inherits the `Node` class and all its
+properties and functions. We can change the behavior of the functions in the
+"parent" class by writing out the function again. This is known as
+"overloading" the function. Here we overload the `_ready` function, which the
+engine calls only once when the node is instantiated.
+
+` -> void:` states that the function doesn't return anything. Because GDScript
+is a white-space scoped language (much like Python), we can't have a totally
+empty function body, so we write `pass` to signify the function does nothing.
+
+```
+func _physics_process(delta: float) -> void:
+	velocity = Vector2.ZERO
+	if (Input.is_key_pressed(KEY_W)):
+		velocity.y = -WALKING_SPEED
+	if (Input.is_key_pressed(KEY_S)):
+		velocity.y = WALKING_SPEED
+	if (Input.is_key_pressed(KEY_A)):
+		velocity.x = -WALKING_SPEED
+	if (Input.is_key_pressed(KEY_D)):
+		velocity.x = WALKING_SPEED
+	move_and_slide()
+```
+This function has a more complex body than the previous one. It's called on
+every frame that the physics engine updates. This is different from `_process`,
+which updates every frame regardless if physics was updated or not. Here we
+reset `velocity` to the zero vector. `velocity` is a property given to us by
+`CharacterBody2D`; we didn't have to define it somewhere in the engine because
+we inherited it using `extends`. We then update the components of velocity
+depending on which of the WSAD keys were being pressed. Finally, the call to
+`move_and_slide()` updates the player's current position depending on its
+velocity.
 
 To run, press `F5` or click the play button in the top-right corner of the
 editor and use WSAD to move. You now have a primitive but playable character!
 
 ![Godot primitive Link.](./godot-primitive-link.gif)
+
+## 2.4: Next Steps:
+
+The next tutorial will have you creating a 2D platformer. To complete this
+module, create a new node that's controlled by the arrow keys on your keyboard.
+The simplest way to do this would be duplicating the node we just created while
+only changing the script we made. Then, change the behavior of the new player
+somehow (maybe it could speed up the longer you hold the movement down, or it
+could gradually accelerate instead of immediately moving and then stop
+accelerating once a target speed is hit.) Whatever you do, explain its behavior
+somewhere in your submission.
+
+The preferred method for submitting this project would be creating a git
+repository for what you create (or reusing an old one) and hosting it on
+github. You can then send the Programming director the link to the github page.
+Using Github would allow for pull requests and issues which would optimize
+feedback. Alternatively, you can email the current Programming director a zip
+file containing your project. You can find the email for the current director
+in the [home page](./index.md).
+
