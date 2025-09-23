@@ -40,8 +40,8 @@ your favorite package manager to install it. You know what to do. ;-)
 It's required to set your username and email. To do so, open a terminal and run
 these commands:
 ```bash
-git config --global --set user.name <your name>
-git config --global --set user.email <your email>
+git config --global --add user.name <your name>
+git config --global --add user.email <your email>
 ```
 
 Replace `<your name>` and `<your email>` with your real-life name and prefered
@@ -56,7 +56,7 @@ features. On Windows, failure to set the editor might lead to git crashing. To
 set your editor, run the following command in the terminal:
 
 ```bash
-git config --global --set core.editor <your editor>
+git config --global --add core.editor <your editor>
 ```
 
 Replace `<your editor>` with the file path to the editor you'd like to use when
